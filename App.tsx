@@ -10,6 +10,7 @@ import AlertPopup from './components/AlertPopup';
 import Navbar from './components/Navbar';
 import CreatorPage from './components/CreatorPage';
 import Credits from './components/Credits';
+import PassesSold from './components/PassesSold';
 
 export type Page = 'home' | 'creator';
 
@@ -71,6 +72,7 @@ const App: React.FC = () => {
         />
         <div className="relative z-10 bg-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <PassesSold />
             <Countdown />
             <Highlights />
             <Venue onVisible={handleVenueVisible} />

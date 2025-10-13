@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
 interface IntroAnimationProps {
@@ -6,7 +6,25 @@ interface IntroAnimationProps {
     isLoading: boolean;
 }
 
+const TYPEWRITER_TEXT = "NGIT x KMEC";
+const TYPEWRITER_SPEED = 150; // ms per character
+
 const IntroAnimation: React.FC<IntroAnimationProps> = ({ onComplete, isLoading }) => {
+    // Typewriter effect state
+    const [typedText, setTypedText] = useState('');
+    useEffect(() => {
+        if (!isLoading) {
+            setTypedText('');
+            let i = 0;
+            const interval = setInterval(() => {
+                setTypedText(TYPEWRITER_TEXT.slice(0, i + 1));
+                i++;
+                if (i >= TYPEWRITER_TEXT.length) clearInterval(interval);
+            }, TYPEWRITER_SPEED);
+            return () => clearInterval(interval);
+        }
+    }, [isLoading]);
+
     if (isLoading) {
         return (
             <div className="fixed inset-0 bg-black z-50 flex flex-col items-center justify-center overflow-hidden">
@@ -23,7 +41,7 @@ const IntroAnimation: React.FC<IntroAnimationProps> = ({ onComplete, isLoading }
                         className="text-7xl sm:text-8xl md:text-9xl font-black font-orbitron text-emerald-400"
                         style={{ filter: 'drop-shadow(0 0 2px #39FF14) drop-shadow(0 0 10px #39FF14) drop-shadow(0 0 20px #39FF14)' }}
                         animate={{ opacity: [0.4, 1, 0.4] }}
-                        transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
+                        transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut', delay: 0.1 }}
                     >
                         Fresco 2K25
                     </motion.h1>
@@ -54,7 +72,10 @@ const IntroAnimation: React.FC<IntroAnimationProps> = ({ onComplete, isLoading }
                         textShadow: '0 0 8px rgba(200, 200, 200, 0.5)'
                     }}
                 >
-                    NGIT x KMEC
+                    {typedText}
+                    <span className="animate-pulse text-emerald-400">
+                        {typedText.length < TYPEWRITER_TEXT.length ? '|' : ''}
+                    </span>
                 </motion.h2>
                 <motion.h1
                     className="text-7xl sm:text-8xl md:text-9xl font-black font-orbitron text-emerald-400"

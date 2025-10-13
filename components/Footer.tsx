@@ -14,7 +14,6 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                     <p>An NGIT x KMEC Collaboration.</p>
                     <div className="text-xs mt-1 text-gray-600 flex items-center justify-center md:justify-start gap-2">
                         <span>Designed & Developed by <span className="text-gray-500 font-semibold">Navale Lokesh</span>.</span>
-                        <button onClick={onNavigate} className="text-emerald-400 hover:text-emerald-300 transition-colors text-xs font-semibold">(Know More)</button>
                     </div>
                 </div>
                 <MusicPlayer />

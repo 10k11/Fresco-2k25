@@ -18,54 +18,7 @@ const MusicPlayer: React.FC = () => {
     // whether autoplay was blocked and we should ask the user
     const [autoplayFailed, setAutoplayFailed] = useState(false);
     const audioRef = useRef<HTMLAudioElement | null>(null);
-
-    // Attempt muted autoplay on mount (highest success), then try unmute.
-    useEffect(() => {
-        let mounted = true;
-
-        const tryAutoPlay = async () => {
-            const audio = audioRef.current;
-            if (!audio) return;
-
-            // improve autoplay chances
-            audio.loop = true;
-            audio.preload = 'auto';
-            // playsInline helps on iOS
-            (audio as any).playsInline = true;
-            audio.volume = 0.6;
-
-            // Try muted autoplay first (most browsers allow this)
-            try {
-                audio.muted = true;
-                await audio.play();
-                if (!mounted) return;
-                setIsPlaying(true);
-
-                // Best-effort unmute after playback begins
-                setTimeout(async () => {
-                    try {
-                        audio.muted = false;
-                        await audio.play();
-                    } catch (unmuteErr) {
-                        // keep muted if unmute blocked
-                        console.warn('Unmute attempt blocked (best-effort):', unmuteErr);
-                        audio.muted = true;
-                    }
-                }, 500);
-                return;
-            } catch (mutedErr) {
-                console.warn('Muted autoplay failed, will ask user:', mutedErr);
-                // mark so we show the prompt to the user
-                if (mounted) setAutoplayFailed(true);
-            }
-        };
-
-        tryAutoPlay();
-
-        return () => {
-            mounted = false;
-        };
-    }, []);
+    const [isExpanded, setIsExpanded] = useState(true); // expanded by default
 
     const togglePlayPause = async () => {
         const audio = audioRef.current;
@@ -75,13 +28,14 @@ const MusicPlayer: React.FC = () => {
             audio.pause();
             setIsPlaying(false);
         } else {
-            // User interaction: ensure unmuted so they hear audio
             audio.muted = false;
             audio.volume = 1;
             try {
                 await audio.play();
                 setIsPlaying(true);
                 setAutoplayFailed(false);
+                // Minimise after play on mobile
+                if (window.innerWidth < 640) setIsExpanded(false);
             } catch (error) {
                 console.error('Audio playback failed on user toggle:', error);
                 setIsPlaying(false);
@@ -186,48 +140,106 @@ const MusicPlayer: React.FC = () => {
         };
     }, []);
 
-    const buttonClasses = `bg-gray-800 text-emerald-400 p-3 rounded-full border border-emerald-500/30 hover:bg-emerald-500 hover:text-black transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-400 ${isPlaying ? 'animate-pulse-emerald' : ''}`;
+    // Always show the play/pause button, fixed at bottom right for mobile ergonomics
+    // Responsive styles for mobile, smaller button and label
+    const buttonClasses = `bg-gray-800 text-emerald-400 p-3 sm:p-4 rounded-full border border-emerald-500/30 hover:bg-emerald-500 hover:text-black transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-400 shadow-lg
+        active:scale-95 flex items-center justify-center
+        `;
+
+    // Button label logic
+    let buttonLabel = 'Play Audio';
+    if (isPlaying) {
+        buttonLabel = 'Pause Audio';
+    }
+
+    // Mobile slide-in styles
+    const mobileContainer =
+        "fixed bottom-24 right-0 z-50 sm:bottom-32 sm:right-6 flex flex-col items-center transition-transform duration-300";
+    const mobileCollapsed = "translate-x-[80%] sm:translate-x-0";
+    const mobileExpanded = "translate-x-0";
 
     return (
-        <div className="relative">
+        <div>
             {/* add preload and playsInline attributes to the element */}
             <audio ref={audioRef} src={MUSIC_URL} loop preload="auto" playsInline />
-            <button
-                onClick={togglePlayPause}
-                className={buttonClasses}
-                aria-label={isPlaying ? 'Pause music' : 'Play music'}
-            >
-                {isPlaying ? (
-                    <PauseIcon className="w-6 h-6" />
-                ) : (
-                    <PlayIcon className="w-6 h-6" />
-                )}
-            </button>
 
-            {/* If autoplay was blocked, ask the user whether to play audio */}
+            {/* Mobile slide-in button with liquid glass effect */}
+            <div
+                className={`${mobileContainer} ${isExpanded ? mobileExpanded : mobileCollapsed} `}
+                style={{ minWidth: 60 }}
+            >
+                {/* Redesigned close button above the main button */}
+                {isExpanded && (
+                    <button
+                        className="mb-2 bg-gray-800 text-emerald-300 rounded-full w-8 h-8 flex items-center justify-center shadow-lg border border-emerald-500/30 sm:hidden"
+                        style={{ position: 'relative', right: 0 }}
+                        onClick={() => setIsExpanded(false)}
+                        aria-label="Hide music controls"
+                    >
+                        <span className="text-lg font-bold">&times;</span>
+                    </button>
+                )}
+                <button
+                    onClick={togglePlayPause}
+                    className={buttonClasses}
+                    aria-label={buttonLabel}
+                    style={{
+                        minWidth: 44,
+                        minHeight: 44,
+                        fontSize: 20,
+                        touchAction: 'manipulation',
+                    }}
+                >
+                    {/* Icon logic: Play if never played, Resume if paused after play, Pause if playing */}
+                    {!isPlaying ? (
+                        <PlayIcon className="w-6 h-6 sm:w-7 sm:h-7" />
+                    ) : (
+                        <PauseIcon className="w-6 h-6 sm:w-7 sm:h-7" />
+                    )}
+                </button>
+                {/* Label always visible on mobile */}
+                <span className="block mt-2 text-xs text-emerald-300 font-semibold sm:hidden">{buttonLabel}</span>
+            </div>
+            {/* Tab/handle for mobile to expand/collapse */}
+            {!isExpanded && (
+                <button
+                    className="fixed bottom-24 right-0 z-50 bg-emerald-500 text-black px-2 py-1 rounded-l-full text-xs font-bold shadow-lg sm:hidden"
+                    style={{ minWidth: 32 }}
+                    onClick={() => setIsExpanded(true)}
+                    aria-label="Show music controls"
+                >
+                    Music
+                </button>
+            )}
+
+            {/* Autoplay prompt, mobile-optimized */}
             {autoplayFailed && (
-                <div className="fixed bottom-4 right-4 z-50 bg-black/70 text-white px-3 py-2 rounded-md shadow-md backdrop-blur-sm flex items-center gap-2">
-                    <span className="text-sm">Play audio?</span>
-                    <button
-                        onClick={handlePromptPlay}
-                        className="bg-emerald-500 text-black px-2 py-1 rounded-full text-sm"
-                        aria-label="Play audio"
-                    >
-                        Play
-                    </button>
-                    <button
-                        onClick={handlePromptDecline}
-                        className="bg-gray-700 text-white px-2 py-1 rounded-full text-sm"
-                        aria-label="No thanks"
-                    >
-                        No thanks
-                    </button>
+                <div className="fixed bottom-20 right-4 z-50 bg-black/80 text-white px-4 py-3 rounded-xl shadow-lg backdrop-blur-sm flex flex-col sm:flex-row items-center gap-2 max-w-[90vw] sm:max-w-xs"
+                    style={{ fontSize: '1rem', lineHeight: '1.3', wordBreak: 'break-word' }}>
+                    <span className="text-base mb-2 sm:mb-2">Play audio?</span>
+                    <div className="flex gap-2">
+                        <button
+                            onClick={handlePromptPlay}
+                            className="bg-emerald-500 text-black px-3 py-2 rounded-full text-base active:scale-95"
+                            aria-label="Play audio"
+                        >
+                            Play
+                        </button>
+                        <button
+                            onClick={handlePromptDecline}
+                            className="bg-gray-700 text-white px-3 py-2 rounded-full text-base active:scale-95"
+                            aria-label="No thanks"
+                        >
+                            No thanks
+                        </button>
+                    </div>
                 </div>
             )}
 
             {/* Diagnostic banner: visible when the HEAD check or audio error indicates a problem */}
             {sourceExists === false && (
-                <div className="fixed bottom-4 right-4 z-50 bg-black/80 text-white px-3 py-2 rounded-md shadow-md backdrop-blur-sm max-w-xs">
+                <div className="fixed bottom-20 right-4 z-50 bg-black/80 text-white px-4 py-3 rounded-xl shadow-lg backdrop-blur-sm max-w-[90vw] sm:max-w-xs"
+                    style={{ fontSize: '0.95rem', wordBreak: 'break-word' }}>
                     <div className="text-xs mb-1">Audio failed to load:</div>
                     <div className="text-sm font-mono mb-2 truncate">{sourceError || 'Unknown error'}</div>
                     {sourceContentType && (

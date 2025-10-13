@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import IntroAnimation from './IntroAnimation';
 import ParticleBackground from './ParticleBackground';
 import { Page } from '../App';
+import { motion } from 'framer-motion';
 
 interface HeroProps {
     onIntroFinish: () => void;
@@ -17,6 +18,7 @@ const Hero: React.FC<HeroProps> = ({ onIntroFinish, isIntroFinished }) => {
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [showIntro, setShowIntro] = useState<boolean>(true);
+    const [startAnimation, setStartAnimation] = useState(false);
 
     useEffect(() => {
         const image = new Image();
@@ -30,7 +32,7 @@ const Hero: React.FC<HeroProps> = ({ onIntroFinish, isIntroFinished }) => {
         const handleError = () => {
             setError("Failed to load hero image.");
             // Fallback background in case of error (served from public/ as /images/download.jpg)
-            setImageUrl('/Fresco-2k25/images/hero.png');
+            setImageUrl('/images/hero.png');
             setIsLoading(false);
         };
         
@@ -42,6 +44,13 @@ const Hero: React.FC<HeroProps> = ({ onIntroFinish, isIntroFinished }) => {
             image.removeEventListener('error', handleError);
         };
     }, []);
+    
+    useEffect(() => {
+        if (!isLoading && imageUrl) {
+            const timer = setTimeout(() => setStartAnimation(true), 3000);
+            return () => clearTimeout(timer);
+        }
+    }, [isLoading, imageUrl]);
     
     const handleIntroComplete = () => {
         setShowIntro(false);
@@ -74,21 +83,60 @@ const Hero: React.FC<HeroProps> = ({ onIntroFinish, isIntroFinished }) => {
 
                
                 {!isLoading && imageUrl && (
-                    <div className="relative z-10 p-4 flex flex-col items-center">
-                        <h2 className="text-2xl md:text-4xl font-bold tracking-widest font-orbitron text-gray-300">
+                    <motion.div
+                        className="relative z-10 p-4 flex flex-col items-center"
+                        initial="hidden"
+                        animate={startAnimation ? "visible" : "hidden"}
+                        variants={{
+                            hidden: {},
+                            visible: {
+                                transition: {
+                                    staggerChildren: 0.25
+                                }
+                            }
+                        }}
+                    >
+                        {/* Subheading */}
+                        <motion.h2
+                            className="text-xl md:text-2xl font-medium tracking-wide text-gray-400 uppercase"
+                            variants={{
+                                hidden: { opacity: 0, y: 60 },
+                                visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: 'easeOut' } }
+                            }}
+                        >
                             NGIT x KMEC
-                        </h2>
-                        <h1 className="text-6xl sm:text-8xl md:text-9xl font-black my-4 font-orbitron text-emerald-400 animate-pulse"
+                        </motion.h2>
+
+                        {/* Main heading */}
+                        <motion.h1
+                            className="text-7xl sm:text-6xl md:text-7xl font-extrabold my-4 text-emerald-400"
                             style={{
-                                filter: 'drop-shadow(0 0 2px #39FF14) drop-shadow(0 0 10px #39FF14) drop-shadow(0 0 20px #39FF14)'
-                            }}>
+                                filter: 'drop-shadow(0 0 8px #39FF14)'
+                            }}
+                            variants={{
+                                hidden: { opacity: 0, scale: 0.6, y: 80 },
+                                visible: { opacity: 1, scale: 1, y: 0, transition: { duration: 1, ease: 'easeOut' } }
+                            }}
+                            whileHover={{
+                                scale: 1.05,
+                                textShadow: "0 0 24px #39FF14"
+                            }}
+                        >
                             Fresco 2K25
-                        </h1>
-                        <div className="text-xl md:text-2xl font-semibold tracking-wider bg-black bg-opacity-50 px-4 py-2 rounded-lg">
+                        </motion.h1>
+
+                        {/* Event details */}
+                        <motion.div
+                            className="text-base md:text-lg font-medium tracking-wide bg-black bg-opacity-30 px-4 py-2 rounded-md text-gray-200 text-center"
+                            variants={{
+                                hidden: { opacity: 0, y: 40 },
+                                visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: 'easeOut' } }
+                            }}
+                        >
                             <p>NICOS Cafe Lounge Bar</p>
-                            <p className="text-lg">2nd Nov, 11 AM Onwards</p>
-                        </div>
-                    </div>
+                            <p>2nd Nov, 11 AM Onwards</p>
+                        </motion.div>
+                    </motion.div>
                 )}
                 
                 {!isLoading && (
