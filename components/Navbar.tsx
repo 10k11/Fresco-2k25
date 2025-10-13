@@ -1,0 +1,74 @@
+import React, { useState, useEffect } from 'react';
+import { MenuIcon, CloseIcon } from './icons';
+
+const NavLink: React.FC<{ href: string; children: React.ReactNode; onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void }> = ({ href, children, onClick }) => (
+    <a href={href} onClick={onClick} className="block md:inline-block text-gray-300 hover:text-emerald-400 px-3 py-2 rounded-md text-lg font-medium transition-colors duration-300">
+        {children}
+    </a>
+);
+
+const Navbar: React.FC = () => {
+    const [isOpen, setIsOpen] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > 50);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+    
+    const handleHomeLinkClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    const handleNavLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, hash: string) => {
+        e.preventDefault();
+        document.querySelector(hash)?.scrollIntoView({ behavior: 'smooth' });
+    };
+
+    return (
+        <nav className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${isScrolled || isOpen ? 'bg-black/90 backdrop-blur-sm' : 'bg-transparent'}`}>
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex items-center justify-between h-20">
+                    <div className="flex-shrink-0">
+                        <a href="#" onClick={handleHomeLinkClick} className="text-2xl font-bold font-orbitron text-emerald-400">
+                            Fresco 2K25
+                        </a>
+                    </div>
+                    <div className="hidden md:block">
+                        <div className="ml-10 flex items-baseline space-x-4">
+                            <NavLink href="#highlights" onClick={(e) => handleNavLinkClick(e, '#highlights')}>Highlights</NavLink>
+                            <NavLink href="#venue" onClick={(e) => handleNavLinkClick(e, '#venue')}>Venue</NavLink>
+                            <a href="https://forms.gle/JtL1PDNHg4NMV4AA9" target="_blank" rel="noopener noreferrer" className="bg-emerald-500 text-black font-bold px-5 py-2 rounded-md hover:bg-emerald-400 transition-all transform hover:scale-105">
+                                Book Pass
+                            </a>
+                        </div>
+                    </div>
+                    <div className="-mr-2 flex md:hidden">
+                        <button onClick={() => setIsOpen(!isOpen)} className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none">
+                            <span className="sr-only">Open main menu</span>
+                            {isOpen ? <CloseIcon className="block h-6 w-6" /> : <MenuIcon className="block h-6 w-6" />}
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            {isOpen && (
+                <div className="md:hidden">
+                    <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 text-center">
+                        <NavLink href="#highlights" onClick={(e) => { handleNavLinkClick(e, '#highlights'); setIsOpen(false); }}>Highlights</NavLink>
+                        <NavLink href="#venue" onClick={(e) => { handleNavLinkClick(e, '#venue'); setIsOpen(false); }}>Venue</NavLink>
+                        <a href="https://forms.gle/JtL1PDNHg4NMV4AA9" target="_blank" rel="noopener noreferrer" onClick={() => setIsOpen(false)} className="block bg-emerald-500 text-black font-bold px-5 py-3 rounded-md hover:bg-emerald-400 transition-all w-full mt-2">
+                           Book Pass
+                        </a>
+                    </div>
+                </div>
+            )}
+        </nav>
+    );
+};
+
+export default Navbar;
