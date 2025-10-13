@@ -3,7 +3,7 @@ import { PlayIcon, PauseIcon } from './icons';
 
 // Use Vite base-aware public path so the browser fetches the correct URL when `base` is set.
 const base = (import.meta as any).env?.BASE_URL ?? '/';
-const MUSIC_URL = `/Fresco-2k25/audio/bg.mp3`;
+const MUSIC_URL = `/audio/bg.mp3`;
 
 const MusicPlayer: React.FC = () => {
     // playback state
