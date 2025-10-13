@@ -22,19 +22,19 @@ const ReviewCard: React.FC<{ name: string; review: string; rating: number }> = (
 
 const venueImages = [
     {
-        src: '/Fresco-2k25/images/Screenshot 2025-10-12 171854.png',
+        src: '/images/Screenshot 2025-10-12 171854.png',
         alt: 'The exterior of NICOS Cafe Lounge Bar at night, with modern architecture and glowing signs.'
     },
     {
-        src: '/Fresco-2k25/images/Screenshot 2025-10-12 171926.png',
+        src: '/images/Screenshot 2025-10-12 171926.png',
         alt: 'Stylish interior of NICOS with comfortable seating and ambient lighting.'
     },
     {
-        src: '/Fresco-2k25/images/Screenshot 2025-10-12 171941.png',
+        src: '/images/Screenshot 2025-10-12 171941.png',
         alt: 'A view of the elegant bar and lounge area inside NICOS.'
     },
     {
-        src: '/Fresco-2k25/images/Screenshot 2025-10-12 171954.png',
+        src: '/images/Screenshot 2025-10-12 171954.png',
         alt: 'A vibrant seating area inside NICOS, perfect for groups.'
     }
 ];
