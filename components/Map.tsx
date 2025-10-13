@@ -45,7 +45,7 @@ const Map: React.FC<MapProps> = ({ lat = DEFAULT_LAT, lng = DEFAULT_LNG, zoom = 
           href={directionsUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="px-6 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition"
+          className="px-6 py-2 bg-emerald-400 text-black rounded-lg shadow hover:bg-emerald-500 transition"
         >
           Get Directions
         </a>
