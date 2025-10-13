@@ -10,7 +10,7 @@ interface HeroProps {
 
 // Files placed in the project's `public/` folder are served from the root path.
 // Use '/hero.jpg' (not 'public/hero.jpg') so Vite can load it correctly.
-const HERO_IMAGE_URL = '/Fresco-2k25/images/hero.png';
+const HERO_IMAGE_URL = '/images/hero.png';
 
 const Hero: React.FC<HeroProps> = ({ onIntroFinish, isIntroFinished }) => {
     const [imageUrl, setImageUrl] = useState<string | null>(null);
