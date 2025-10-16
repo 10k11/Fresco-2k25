@@ -1,13 +1,21 @@
+
 import React, { useState, useEffect } from 'react';
 import { MenuIcon, CloseIcon } from './icons';
 
-const NavLink: React.FC<{ href: string; children: React.ReactNode; onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void }> = ({ href, children, onClick }) => (
+// Fix: Add explicit types for NavLink component props.
+interface NavLinkProps {
+    href: string;
+    children: React.ReactNode;
+    onClick: (e: React.MouseEvent<HTMLAnchorElement>) => void;
+}
+
+const NavLink: React.FC<NavLinkProps> = ({ href, children, onClick }) => (
     <a href={href} onClick={onClick} className="block md:inline-block text-gray-300 hover:text-emerald-400 px-3 py-2 rounded-md text-lg font-medium transition-colors duration-300">
         {children}
     </a>
 );
 
-const Navbar: React.FC = () => {
+const Navbar = ({ onNavigate }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
 
@@ -42,9 +50,9 @@ const Navbar: React.FC = () => {
                         <div className="ml-10 flex items-baseline space-x-4">
                             <NavLink href="#highlights" onClick={(e) => handleNavLinkClick(e, '#highlights')}>Highlights</NavLink>
                             <NavLink href="#venue" onClick={(e) => handleNavLinkClick(e, '#venue')}>Venue</NavLink>
-                            <a href="https://forms.gle/JtL1PDNHg4NMV4AA9" target="_blank" rel="noopener noreferrer" className="bg-emerald-500 text-black font-bold px-5 py-2 rounded-md hover:bg-emerald-400 transition-all transform hover:scale-105">
+                            <button onClick={() => onNavigate('terms')} className="bg-emerald-500 text-black font-bold px-5 py-2 rounded-md hover:bg-emerald-400 transition-all transform hover:scale-105">
                                 Book Pass
-                            </a>
+                            </button>
                         </div>
                     </div>
                     <div className="-mr-2 flex md:hidden">
@@ -61,9 +69,9 @@ const Navbar: React.FC = () => {
                     <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 text-center">
                         <NavLink href="#highlights" onClick={(e) => { handleNavLinkClick(e, '#highlights'); setIsOpen(false); }}>Highlights</NavLink>
                         <NavLink href="#venue" onClick={(e) => { handleNavLinkClick(e, '#venue'); setIsOpen(false); }}>Venue</NavLink>
-                        <a href="https://forms.gle/JtL1PDNHg4NMV4AA9" target="_blank" rel="noopener noreferrer" onClick={() => setIsOpen(false)} className="block bg-emerald-500 text-black font-bold px-5 py-3 rounded-md hover:bg-emerald-400 transition-all w-full mt-2">
+                        <button onClick={() => { onNavigate('terms'); setIsOpen(false); }} className="block bg-emerald-500 text-black font-bold px-5 py-3 rounded-md hover:bg-emerald-400 transition-all w-full mt-2">
                            Book Pass
-                        </a>
+                        </button>
                     </div>
                 </div>
             )}

@@ -1,8 +1,7 @@
-
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
-
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
+import App from "./App";
 import { inject } from '@vercel/analytics';
 
 inject();
@@ -12,9 +11,10 @@ if (!rootElement) {
   throw new Error("Could not find root element to mount to");
 }
 
-const root = ReactDOM.createRoot(rootElement);
-root.render(
+ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </React.StrictMode>
 );

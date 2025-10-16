@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import Hero from './components/Hero';
 import Countdown from './components/Countdown';
@@ -10,15 +11,13 @@ import AlertPopup from './components/AlertPopup';
 import Navbar from './components/Navbar';
 import CreatorPage from './components/CreatorPage';
 import Credits from './components/Credits';
-import PassesSold from './components/PassesSold';
+import TermsPage from './components/TermsPage';
 
-export type Page = 'home' | 'creator';
-
-const App: React.FC = () => {
+const App = () => {
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const [isAlertClosed, setIsAlertClosed] = useState(false);
   const [isIntroFinished, setIsIntroFinished] = useState(false);
-  const [page, setPage] = useState<Page>('home');
+  const [page, setPage] = useState('home');
 
   useEffect(() => {
     if (page === 'home') {
@@ -41,7 +40,7 @@ const App: React.FC = () => {
     setIsAlertClosed(true);
   };
 
-  const handleNavigate = (newPage: Page) => {
+  const handleNavigate = (newPage) => {
     setPage(newPage);
     window.scrollTo(0, 0);
   };
@@ -62,9 +61,13 @@ const App: React.FC = () => {
     return <CreatorPage onNavigate={() => handleNavigate('home')} />;
   }
 
+  if (page === 'terms') {
+    return <TermsPage onNavigate={handleNavigate} />;
+  }
+
   return (
     <div className="bg-black text-white min-h-screen overflow-x-hidden">
-      <Navbar />
+      <Navbar onNavigate={handleNavigate} />
       <>
         <Hero 
           onIntroFinish={handleIntroFinish} 
@@ -72,17 +75,16 @@ const App: React.FC = () => {
         />
         <div className="relative z-10 bg-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <PassesSold />
             <Countdown />
             <Highlights />
             <Venue onVisible={handleVenueVisible} />
             <Menu />
-            <Booking />
+            <Booking onNavigate={handleNavigate} />
             <Credits onNavigate={handleNavigate} />
           </div>
         </div>
         <Footer onNavigate={() => handleNavigate('creator')} />
-        <AlertPopup isVisible={isAlertVisible} onClose={handleCloseAlert} />
+        <AlertPopup isVisible={isAlertVisible} onClose={handleCloseAlert} onNavigate={handleNavigate} />
       </>
     </div>
   );

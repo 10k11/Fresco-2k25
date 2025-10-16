@@ -1,8 +1,9 @@
+
 import React from 'react';
 import { CalendarIcon, PhoneIcon } from './icons';
 import AnimatedDiv from './AnimatedDiv';
 
-const Booking: React.FC = () => {
+const Booking = ({ onNavigate }) => {
     return (
         <section id="booking" className="py-20 text-center">
             <AnimatedDiv threshold={0.2}>
@@ -11,13 +12,11 @@ const Booking: React.FC = () => {
             </AnimatedDiv>
             
             <AnimatedDiv threshold={0.2} delay={0.1}>
-                <a 
-                    href="https://forms.gle/JtL1PDNHg4NMV4AA9"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                <button 
+                    onClick={() => onNavigate('terms')}
                     className="inline-block bg-emerald-500 text-black font-bold text-2xl px-12 py-4 rounded-lg hover:bg-emerald-400 transition-all transform hover:scale-105 shadow-lg shadow-emerald-500/30">
                     Book Your Pass
-                </a>
+                </button>
                 <div className="mt-6 flex flex-wrap justify-center items-center gap-4">
                     <a
                         href="https://www.google.com/calendar/render?action=TEMPLATE&text=Fresco%202K25&dates=20251102T110000/20251102T170000&ctz=Asia/Kolkata&details=Join%20us%20for%20Fresco%202K25%2C%20a%20premier%20non-alcoholic%20event%20hosted%20by%20NGIT%20x%20KMEC.%20Alcohol%20is%20strictly%20prohibited.&location=NICOS%20Cafe%20Lounge%20Bar"

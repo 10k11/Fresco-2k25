@@ -1,11 +1,7 @@
+
 import React from 'react';
 
-interface AlertPopupProps {
-  isVisible: boolean;
-  onClose: () => void;
-}
-
-const AlertPopup: React.FC<AlertPopupProps> = ({ isVisible, onClose }) => {
+const AlertPopup = ({ isVisible, onClose, onNavigate }) => {
   return (
     <div
       className={`fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 transition-opacity duration-300 ease-out
@@ -33,15 +29,15 @@ const AlertPopup: React.FC<AlertPopupProps> = ({ isVisible, onClose }) => {
         <p className="text-gray-300 text-lg mb-8">
           Limited passes available. Secure your spot now.
         </p>
-        <a
-          href="https://forms.gle/JtL1PDNHg4NMV4AA9"
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={onClose}
+        <button
+          onClick={() => {
+            onClose();
+            onNavigate('terms');
+          }}
           className="w-full block bg-emerald-500 text-black font-bold py-3 px-6 rounded-lg text-xl hover:bg-emerald-400 transition-all transform hover:scale-105 shadow-lg shadow-emerald-500/30"
         >
           Book Now
-        </a>
+        </button>
       </div>
     </div>
   );
