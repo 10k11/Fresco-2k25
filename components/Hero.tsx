@@ -126,17 +126,39 @@ const Hero: React.FC<HeroProps> = ({ onIntroFinish, isIntroFinished }) => {
                         </motion.h1>
 
                         {/* Event details */}
-                        <motion.div
-                            className="text-base md:text-lg font-medium tracking-wide bg-black bg-opacity-30 px-4 py-2 rounded-md text-gray-200 text-center"
-                            variants={{
-                                hidden: { opacity: 0, y: 40 },
-                                visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: 'easeOut' } }
-                            }}
-                        >
-                            <p>NICOS Cafe Lounge Bar</p>
-                            <p>2nd Nov, 11 AM Onwards</p>
-                        </motion.div>
+                        {/* Animated Price Section with Glass Card */}
+<motion.div
+  initial={{ scale: 0.95, opacity: 0 }}
+  animate={{ scale: 1, opacity: 1 }}
+  transition={{ delay: 0.3, duration: 0.6, ease: 'easeOut' }}
+  className="cursor-pointer flex flex-col items-center p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-gray-700 shadow-md max-w-xs mx-auto transition-transform hover:scale-105 hover:shadow-xl hover:shadow-emerald-400/50"
+  onClick={() => {
+    const el = document.getElementById('event-highlights');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  }}
+>
+  {/* Main Price */}
+  <motion.span
+    initial={{ scale: 0.95 }}
+    animate={{ scale: [1.05, 1, 1.05] }}
+    transition={{ repeat: Infinity, duration: 2 }}
+    className="text-2xl md:text-3xl font-extrabold text-emerald-400 drop-shadow-[0_0_12px_#39FF14]"
+  >
+    ₹1,199
+  </motion.span>
+
+  {/* Previous Price Below with Bigger Strikethrough */}
+  <span className="text-gray-300 text-lg md:text-xl mt-2 line-through decoration-2 decoration-red-500 font-semibold">
+    ₹1,399
+  </span>
+
+  {/* Offer Text */}
+  <p className="text-yellow-400 mt-2 animate-pulse font-semibold text-sm md:text-base">
+    Limited-time offer 🔥
+  </p>
+</motion.div>
                     </motion.div>
+                    
                 )}
                 
                 {!isLoading && (

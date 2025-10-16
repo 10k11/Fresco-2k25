@@ -22,21 +22,29 @@ const ReviewCard: React.FC<{ name: string; review: string; rating: number }> = (
 
 const venueImages = [
     {
-        src: '/images/Screenshot 2025-10-12 171854.png',
+        src: '/images/Screenshot 2025-10-16 221057.png',
         alt: 'The exterior of NICOS Cafe Lounge Bar at night, with modern architecture and glowing signs.'
     },
     {
-        src: '/images/Screenshot 2025-10-12 171926.png',
+        src: '/images/Screenshot 2025-10-12 171941.png',
         alt: 'Stylish interior of NICOS with comfortable seating and ambient lighting.'
     },
     {
-        src: '/images/Screenshot 2025-10-12 171941.png',
-        alt: 'A view of the elegant bar and lounge area inside NICOS.'
+        src: '/images/Screenshot 2025-10-16 221132.png',
+        alt: 'A vibrant seating area inside NICOS, perfect for groups.'
     },
     {
-        src: '/images/Screenshot 2025-10-12 171954.png',
+        src: '/images/hero.png',
         alt: 'A vibrant seating area inside NICOS, perfect for groups.'
-    }
+    },
+    {
+        src: '/images/Screenshot 2025-10-16 221200.png',
+        alt: 'A vibrant seating area inside NICOS, perfect for groups.'
+    },
+    {
+        src: '/images/Screenshot 2025-10-16 221217.png',
+        alt: 'A vibrant seating area inside NICOS, perfect for groups.'
+    },
 ];
 
 
@@ -95,7 +103,7 @@ const Venue: React.FC<VenueProps> = ({ onVisible }) => {
         </AnimatedDiv>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <AnimatedDiv>
-            <h3 className="text-3xl font-bold text-emerald-400 mb-4">NICOS Cafe Lounge Bar</h3>
+            <h3 className="text-3xl font-bold text-emerald-400 mb-4">TABERNA Club&Kitchen</h3>
             
             {/* Image Gallery */}
             <div className="relative h-[300px] sm:h-[450px] w-full max-w-3xl mx-auto mb-8 rounded-lg overflow-hidden shadow-2xl group">
@@ -137,8 +145,9 @@ const Venue: React.FC<VenueProps> = ({ onVisible }) => {
             
             <h4 className="text-2xl font-bold mb-4">Google Reviews</h4>
             <div className="space-y-4">
-              <ReviewCard name="Rahul K." review="Amazing ambiance and fantastic mocktails! A perfect place for a great night out without alcohol." rating={5} />
-              <ReviewCard name="Priya S." review="Loved the energy and the music. The interiors are stunning. Highly recommended." rating={5} />
+              <ReviewCard name="
+Abhishek Varma" review="Amazing ambiance and fantastic mocktails! A perfect place for a great night out." rating={5} />
+              <ReviewCard name="Priya S." review="Loved the energy and the music. The interiors are stunning. Highly recommended." rating={4} />
             </div>
           </AnimatedDiv>
           <AnimatedDiv delay={0.2}>

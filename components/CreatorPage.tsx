@@ -26,10 +26,13 @@ const CreatorPage: React.FC<CreatorPageProps> = ({ onNavigate }) => {
                     Navale Lokesh
                 </h1>
                 
-                <p className="text-gray-400 leading-relaxed mb-12">
-                    Passionate about crafting beautiful, functional, and user-centric digital experiences. 
-                    This cinematic invitation for Fresco 2K25 was designed and developed to create an immersive and memorable first impression for the event.
-                </p>
+                 <p className="text-lg md:text-xl max-w-3xl mx-auto leading-relaxed text-gray-300">
+    Hi! I’m a <span className="text-emerald-400 font-semibold">second-year student at NGIT</span>,  
+    passionate about <span className="text-emerald-400 font-semibold">web designing</span> and <span className="text-emerald-400 font-semibold">video editing</span>.  
+    I love creating visually appealing and interactive digital experiences, whether it's designing modern websites or editing engaging videos.  
+    Currently, I’m focused on improving my skills in <span className="text-emerald-400 font-semibold">frontend development</span>, <span className="text-emerald-400 font-semibold">graphic design</span>, and <span className="text-emerald-400 font-semibold">motion graphics</span>.
+  </p>
+  <br />
 
                 <div className="flex justify-center items-center gap-8 mb-16">
                     <SocialLink href="https://github.com/LOKI1106" icon={<GithubIcon className="w-8 h-8" />} label="GitHub" />

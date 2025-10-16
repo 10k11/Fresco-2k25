@@ -38,7 +38,7 @@ const Highlights: React.FC = () => {
         {
             icon: <FaHeadphones size={48} />,
             title: "Live DJ",
-            description: "Groove to the electrifying beats all day long.",
+            description: "Groove to the electrifying beats",
         },
         {
             icon: <MdMusicNote size={48} />,
@@ -48,7 +48,7 @@ const Highlights: React.FC = () => {
         {
             icon: <MdSportsEsports size={48} />,
             title: "Interactive Games",
-            description: "Participate in fun games and win exciting prizes.",
+            description: "Participate in fun games and enjoy",
         },
     ];
 

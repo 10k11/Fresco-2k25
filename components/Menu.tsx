@@ -14,11 +14,10 @@ const MenuItem: React.FC<{ category: string; items: string[] }> = ({ category, i
 
 const Menu: React.FC = () => {
     const menu = {
-        "Starters": ["Paneer Tikka", "Chilli Gobi", "Hara Bhara Kebab", "Crispy Corn"],
-        "Main Course": ["Dal Makhani", "Shahi Paneer", "Veg Biryani", "Assorted Breads (Naan, Roti)"],
-        "Live Counters": ["Pasta (Red/White Sauce)", "Tacos Station"],
-        "Desserts": ["Chocolate Brownie", "Gulab Jamun", "Ice Cream Variety"],
-        "Beverages": ["Exotic Mocktails", "Fresh Juices", "Soft Drinks"],
+        "Starters": ["Non-Veg Starter", "Non-Veg Starter", "Veg Starter", "Veg Starter"],
+        "Main Course": ["Chicken biryani", "Veg biryani",],
+        "Mocktails": ["Mocktails", "Mocktails"],
+        "Beverages": ["Sprite", "Thumbs Up",],
     };
 
     return (
@@ -31,9 +30,8 @@ const Menu: React.FC = () => {
                     <div className="max-w-4xl mx-auto bg-black border border-gray-700 rounded-lg p-8 shadow-2xl">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <MenuItem category="Starters" items={menu.Starters} />
-                        <MenuItem category="Main Course" items={menu['Main Course']} />
-                        <MenuItem category="Live Counters" items={menu['Live Counters']} />
-                        <MenuItem category="Desserts & Beverages" items={[...menu.Desserts, ...menu.Beverages]} />
+                        <MenuItem category="Mocktails" items={menu['Mocktails']} />
+                        <MenuItem category="Beverages" items={menu['Beverages']} />
                     </div>
                 </div>
             </AnimatedDiv>
