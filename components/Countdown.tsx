@@ -10,7 +10,7 @@ const CountdownItem: React.FC<{ value: number; label: string }> = ({ value, labe
 );
 
 const Countdown: React.FC = () => {
-    const { days, hours, minutes, seconds } = useCountdown('2025-11-02T11:00:00');
+    const { days, hours, minutes, seconds } = useCountdown('2025-11-05T11:00:00');
 
     return (
         <section id="countdown" className="py-20 text-center">

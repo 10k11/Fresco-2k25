@@ -126,37 +126,76 @@ const Hero: React.FC<HeroProps> = ({ onIntroFinish, isIntroFinished }) => {
                         </motion.h1>
 
                         {/* Event details */}
-                        {/* Animated Price Section with Glass Card */}
-<motion.div
-  initial={{ scale: 0.95, opacity: 0 }}
-  animate={{ scale: 1, opacity: 1 }}
-  transition={{ delay: 0.3, duration: 0.6, ease: 'easeOut' }}
-  className="cursor-pointer flex flex-col items-center p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-gray-700 shadow-md max-w-xs mx-auto transition-transform hover:scale-105 hover:shadow-xl hover:shadow-emerald-400/50"
-  onClick={() => {
-    const el = document.getElementById('event-highlights');
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  }}
->
-  {/* Main Price */}
-  <motion.span
-    initial={{ scale: 0.95 }}
-    animate={{ scale: [1.05, 1, 1.05] }}
-    transition={{ repeat: Infinity, duration: 2 }}
-    className="text-2xl md:text-3xl font-extrabold text-emerald-400 drop-shadow-[0_0_12px_#39FF14]"
+                       {/* Venue + Date + Time */}
+<div className="mt-8 flex flex-col md:flex-row justify-center items-center gap-3 text-base md:text-lg font-medium text-gray-300">
+  
+  {/* Venue */}
+  <a
+    href="https://www.google.com/maps/search/?api=1&query=Taberna+Club+and+Kitchen"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="flex items-center gap-2 bg-white/5 hover:bg-white/15 backdrop-blur-md px-4 py-2 rounded-xl border border-white/10 hover:border-pink-400/40 transition-all duration-300 hover:scale-[1.03]"
   >
-    ₹1,199
-  </motion.span>
+    <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 md:w-5 md:h-5 text-pink-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M17.657 16.657L13.414 12.414a4 4 0 10-1.414 1.414l4.243 4.243a1 1 0 001.414-1.414z" />
+    </svg>
+    <span>
+      Venue: <span className="text-white font-semibold hover:underline">TABERNA Club & Kitchen</span>
+    </span>
+  </a>
 
-  {/* Previous Price Below with Bigger Strikethrough */}
-  <span className="text-gray-300 text-lg md:text-xl mt-2 line-through decoration-2 decoration-red-500 font-semibold">
-    ₹1,399
-  </span>
+  {/* Date */}
+  <div className="flex items-center gap-2 bg-white/5 hover:bg-white/15 backdrop-blur-md px-4 py-2 rounded-xl border border-white/10 transition-all duration-300">
+    <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 md:w-5 md:h-5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M8 7V3m8 4V3M4 11h16M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+    </svg>
+    <span>
+      Date: <span className="text-white font-semibold">2nd November, 2025</span>
+    </span>
+  </div>
 
-  {/* Offer Text */}
-  <p className="text-yellow-400 mt-2 animate-pulse font-semibold text-sm md:text-base">
-    Limited-time offer 🔥
-  </p>
-</motion.div>
+  {/* Time */}
+  <div className="flex items-center gap-2 bg-white/5 hover:bg-white/15 backdrop-blur-md px-4 py-2 rounded-xl border border-white/10 transition-all duration-300">
+    <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 md:w-5 md:h-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+    <span>
+      Time: <span className="text-white font-semibold">12:00 PM – 5:00 PM</span>
+    </span>
+  </div>
+</div>
+<br />
+                        {/* Animated Price Section with Glass Card */}
+                        <motion.div
+                          initial={{ scale: 0.95, opacity: 0 }}
+                          animate={{ scale: 1, opacity: 1 }}
+                          transition={{ delay: 0.3, duration: 0.6, ease: 'easeOut' }}
+                          className="cursor-pointer flex flex-col items-center p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-gray-700 shadow-md max-w-xs mx-auto transition-transform hover:scale-105 hover:shadow-xl hover:shadow-emerald-400/50"
+                          onClick={() => {
+                            const el = document.getElementById('event-highlights');
+                            if (el) el.scrollIntoView({ behavior: 'smooth' });
+                          }}
+                        >
+                          {/* Main Price */}
+                          <motion.span
+                            initial={{ scale: 0.95 }}
+                            animate={{ scale: [1.05, 1, 1.05] }}
+                            transition={{ repeat: Infinity, duration: 2 }}
+                            className="text-2xl md:text-3xl font-extrabold text-emerald-400 drop-shadow-[0_0_12px_#39FF14]"
+                          >
+                            ₹1,199
+                          </motion.span>
+
+                          {/* Previous Price Below with Bigger Strikethrough */}
+                          <span className="text-gray-300 text-lg md:text-xl mt-2 line-through decoration-2 decoration-red-500 font-semibold">
+                            ₹1,399
+                          </span>
+
+                          {/* Offer Text */}
+                          <p className="text-yellow-400 mt-2 animate-pulse font-semibold text-sm md:text-base">
+                            Limited-time offer 🔥
+                          </p>
+                        </motion.div>
                     </motion.div>
                     
                 )}
