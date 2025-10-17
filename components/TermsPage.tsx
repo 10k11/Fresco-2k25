@@ -11,7 +11,7 @@ const TermsPage = ({ onNavigate }) => {
                 <div className="bg-gray-900 border border-gray-700 rounded-lg p-6 sm:p-8 space-y-6 text-gray-300">
                     <div>
                         <h2 className="text-2xl font-semibold font-orbitron text-emerald-400 mb-2">Event Timing:</h2>
-                        <p>The Freshers Party will be held from 12:00 PM to 5:00 PM. All attendees are requested to arrive on time.</p>
+                        <p>The Freshers Party will be held from 11:00 AM to 4:00 PM. All attendees are requested to arrive on time.</p>
                     </div>
                     <div>
                         <h2 className="text-2xl font-semibold font-orbitron text-emerald-400 mb-2">Alcohol and Intoxication:</h2>
@@ -23,7 +23,7 @@ const TermsPage = ({ onNavigate }) => {
                     <div>
                         <h2 className="text-2xl font-semibold font-orbitron text-emerald-400 mb-2">Passes and Payments:</h2>
                         <ul className="list-disc list-inside space-y-1">
-                            <li>All passes are non-refundable.</li>
+                            <li>Sold Passes are non-refundable.</li>
                             <li>Payment made for the event cannot be refunded under any circumstances.</li>
                         </ul>
                     </div>
