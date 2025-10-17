@@ -150,7 +150,7 @@ const Hero: React.FC<HeroProps> = ({ onIntroFinish, isIntroFinished }) => {
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M8 7V3m8 4V3M4 11h16M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
     </svg>
     <span>
-      Date: <span className="text-white font-semibold">2nd November, 2025</span>
+      Date: <span className="text-white font-semibold">5nd November, 2025</span>
     </span>
   </div>
 
