@@ -3,14 +3,14 @@ import { useSpring, animated } from '@react-spring/web';
 
 interface PassesSoldProps {
   sold: number;
-  total: number;
+  total?: number;
 }
 
-const PassesSold: React.FC<PassesSoldProps> = ({ sold, total }) => {
-  // Animate the sold number from 0 to the given value
-  const { number } = useSpring({
+const PassesSold: React.FC<PassesSoldProps> = ({ sold, total = 100 }) => {
+  // Animate the sold number from 0 to the given value (use spring props object)
+  const spring = useSpring({
     from: { number: 0 },
-    to: { number: sold },
+    to: { number: sold ?? 0 },
     config: { tension: 180, friction: 12 },
   });
 
@@ -22,19 +22,19 @@ const PassesSold: React.FC<PassesSoldProps> = ({ sold, total }) => {
   }, []);
 
   return (
-    <section id="passes-sold" className="py-10 text-center">
+    <section id="passes-sold" className="py-10 text-center relative z-50">
       <div className="flex justify-center items-center gap-4 md:gap-8">
         {/* Sold Passes */}
-        <div className="flex flex-col items-center justify-center bg-gray-900 bg-opacity-50 rounded-2xl p-4 md:p-8 w-24 h-24 md:w-36 md:h-36 border border-emerald-400/30 animate-pulse">
-          <animated.span className="text-4xl md:text-6xl font-bold font-orbitron text-emerald-400">
-            {number.to((n) => Math.floor(n))}
+        <div className="flex flex-col items-center justify-center bg-gray-900 bg-opacity-70 rounded-2xl p-4 md:p-8 w-28 h-28 md:w-40 md:h-40 border border-emerald-400/40">
+          <animated.span className="text-4xl md:text-6xl font-bold font-orbitron text-emerald-300">
+            {spring.number.to((n: number) => Math.floor(n))}
           </animated.span>
           <span className="text-sm md:text-lg uppercase tracking-widest text-white">Sold</span>
         </div>
 
         {/* Total Passes */}
-        <div className="flex flex-col items-center justify-center bg-gray-900 bg-opacity-50 rounded-2xl p-4 md:p-8 w-24 h-24 md:w-36 md:h-36 border border-emerald-400/30">
-          <span className="text-4xl md:text-6xl font-bold font-orbitron text-emerald-400">{100}</span>
+        <div className="flex flex-col items-center justify-center bg-gray-900 bg-opacity-70 rounded-2xl p-4 md:p-8 w-28 h-28 md:w-40 md:h-40 border border-emerald-400/40">
+          <span className="text-4xl md:text-6xl font-bold font-orbitron text-emerald-300">{total}</span>
           <span className="text-sm md:text-lg uppercase tracking-widest text-white">Total</span>
         </div>
       </div>

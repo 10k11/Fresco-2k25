@@ -3,6 +3,7 @@ import IntroAnimation from './IntroAnimation';
 import ParticleBackground from './ParticleBackground';
 import { Page } from '../App';
 import { motion } from 'framer-motion';
+import PassesSold from './PassesSold';
 
 interface HeroProps {
     onIntroFinish: () => void;
@@ -196,6 +197,12 @@ const Hero: React.FC<HeroProps> = ({ onIntroFinish, isIntroFinished }) => {
                             Limited-time offer 🔥
                           </p>
                         </motion.div>
+
+                        {/* Passes sold widget — ensure visibility */}
+                        <div className="mt-8 w-full flex justify-center">
+                          <PassesSold sold={6} total={100} />
+                        </div>
+
                     </motion.div>
                     
                 )}
