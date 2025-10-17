@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import IntroAnimation from './IntroAnimation';
 import ParticleBackground from './ParticleBackground';
-import { Page } from '../App';
 import { motion } from 'framer-motion';
 import PassesSold from './PassesSold';
 
@@ -15,6 +14,9 @@ interface HeroProps {
 const HERO_IMAGE_URL = '/images/hero.png';
 
 const Hero: React.FC<HeroProps> = ({ onIntroFinish, isIntroFinished }) => {
+    // Show runtime errors on screen to diagnose blank page issues
+    const [runtimeError, setRuntimeError] = useState<string | null>(null);
+
     const [imageUrl, setImageUrl] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -62,9 +64,37 @@ const Hero: React.FC<HeroProps> = ({ onIntroFinish, isIntroFinished }) => {
         backgroundImage: `url(${imageUrl})`,
     };
 
+    useEffect(() => {
+        console.log('Hero mounted');
+        const handleErr = (ev: any) => {
+            // support both error and unhandledrejection shapes
+            const msg = ev?.message ?? ev?.reason?.message ?? String(ev);
+            setRuntimeError(msg);
+            console.error('Runtime error captured in Hero:', ev);
+        };
+        window.addEventListener('error', handleErr as EventListener);
+        window.addEventListener('unhandledrejection', handleErr as EventListener);
+
+        return () => {
+            window.removeEventListener('error', handleErr as EventListener);
+            window.removeEventListener('unhandledrejection', handleErr as EventListener);
+        };
+    }, []);
+
     return (
         <>
             {showIntro && <IntroAnimation onComplete={handleIntroComplete} isLoading={isLoading} />}
+            {/* Error overlay to make runtime errors visible instead of a blank screen */}
+            {runtimeError && (
+                <div className="fixed inset-0 bg-black bg-opacity-90 z-[9999] flex items-center justify-center p-6">
+                    <div className="max-w-xl w-full bg-gray-900 text-white p-6 rounded-lg border border-red-500">
+                        <h3 className="text-xl font-bold mb-2">Runtime error detected</h3>
+                        <pre className="text-sm whitespace-pre-wrap break-words">{runtimeError}</pre>
+                        <p className="mt-3 text-sm text-gray-300">Open the browser console for stack trace and file/line.</p>
+                    </div>
+                </div>
+            )}
+
             <div className="h-screen relative flex flex-col items-center justify-center text-center text-white overflow-hidden">
                 <div
                     className="absolute top-0 left-0 w-full h-full bg-cover bg-center transition-opacity duration-1000"
