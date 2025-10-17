@@ -2,15 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useSpring, animated } from '@react-spring/web';
 
 interface PassesSoldProps {
-  sold: number;
+  sold?: number;
   total?: number;
 }
 
-const PassesSold: React.FC<PassesSoldProps> = ({ sold, total = 100 }) => {
+const PassesSold: React.FC<PassesSoldProps> = ({ sold = 11, total = 100 }) => {
   // Animate the sold number from 0 to the given value (use spring props object)
   const spring = useSpring({
     from: { number: 0 },
-    to: { number: sold ?? 0 },
+    to: { number: sold },
     config: { tension: 180, friction: 12 },
   });
 
