@@ -160,7 +160,7 @@ const Hero: React.FC<HeroProps> = ({ onIntroFinish, isIntroFinished }) => {
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
     </svg>
     <span>
-      Time: <span className="text-white font-semibold">12:00 PM – 5:00 PM</span>
+      Time: <span className="text-white font-semibold">11:00 PM – 4:00 PM</span>
     </span>
   </div>
 </div>
