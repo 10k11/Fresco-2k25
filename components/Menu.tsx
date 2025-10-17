@@ -15,7 +15,7 @@ const MenuItem: React.FC<{ category: string; items: string[] }> = ({ category, i
 const Menu: React.FC = () => {
     const menu = {
         "Starters": ["Two Non-Veg Starter","Two Veg Starter"],
-        "Main Course": ["Chicken biryani", "Veg biryani",],
+        "Main Course": ["Chicken biryani","Veg biryani"],
         "Mocktails": ["Unlimited Mocktails"],
         "Beverages": ["Cool Drinks"],
     };
