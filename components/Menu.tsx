@@ -14,10 +14,10 @@ const MenuItem: React.FC<{ category: string; items: string[] }> = ({ category, i
 
 const Menu: React.FC = () => {
     const menu = {
-        "Starters": ["Non-Veg Starter", "Non-Veg Starter", "Veg Starter", "Veg Starter"],
+        "Starters": ["Two Non-Veg Starter","Two Veg Starter"],
         "Main Course": ["Chicken biryani", "Veg biryani",],
-        "Mocktails": ["Mocktails", "Mocktails"],
-        "Beverages": ["Sprite", "Thumbs Up",],
+        "Mocktails": ["Unlimited Mocktails"],
+        "Beverages": ["Cool Drinks"],
     };
 
     return (
