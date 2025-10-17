@@ -30,6 +30,7 @@ const Menu: React.FC = () => {
                     <div className="max-w-4xl mx-auto bg-black border border-gray-700 rounded-lg p-8 shadow-2xl">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <MenuItem category="Starters" items={menu.Starters} />
+                        <MenuItem category="Main Course" items={menu['Main Course']} />
                         <MenuItem category="Mocktails" items={menu['Mocktails']} />
                         <MenuItem category="Beverages" items={menu['Beverages']} />
                     </div>
