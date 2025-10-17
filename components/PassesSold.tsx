@@ -9,8 +9,6 @@ interface PassesSoldProps {
 const PassesSold: React.FC<PassesSoldProps> = ({ sold = 11, total = 100 }) => {
   // Animate the sold number from 0 to the given value (use spring props object)
   const spring = useSpring({
-    from: { number: 0 },
-    to: { number: sold },
     config: { tension: 180, friction: 12 },
   });
 
