@@ -230,7 +230,7 @@ const Hero: React.FC<HeroProps> = ({ onIntroFinish, isIntroFinished }) => {
 
                         {/* Passes sold widget — ensure visibility */}
                         <div className="mt-8 w-full flex justify-center">
-                          <PassesSold sold={39} total={100} />
+                          <PassesSold sold={49} total={100} />
                         </div>
 
                     </motion.div>
