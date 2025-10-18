@@ -112,10 +112,9 @@ const Hero: React.FC<HeroProps> = ({ onIntroFinish, isIntroFinished }) => {
                     </div>
                 )}
 
-               
                 {!isLoading && imageUrl && (
                     <motion.div
-                        className="relative z-10 p-4 flex flex-col items-center"
+                        className="relative z-10 p-4 flex flex-col items-center mt-12"
                         initial="hidden"
                         animate={startAnimation ? "visible" : "hidden"}
                         variants={{

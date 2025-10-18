@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { MenuIcon, CloseIcon } from './icons';
 
@@ -42,8 +41,8 @@ const Navbar = ({ onNavigate }) => {
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-20">
                     <div className="flex-shrink-0">
-                        <a href="#" onClick={handleHomeLinkClick} className="text-2xl font-bold font-orbitron text-emerald-400">
-                            Fresco 2K25
+                        <a href="#" onClick={handleHomeLinkClick} className="text-lg font-bold font-orbitron text-emerald-400">
+                         
                         </a>
                     </div>
                     <div className="hidden md:block">
