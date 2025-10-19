@@ -221,15 +221,14 @@ const Hero: React.FC<HeroProps> = ({ onIntroFinish, isIntroFinished }) => {
                             ₹1,399
                           </span>
 
-                          {/* Offer Text */}
                           <p className="text-yellow-400 mt-2 animate-pulse font-semibold text-sm md:text-base">
                             Limited-time offer 🔥
                           </p>
                         </motion.div>
 
-                        {/* Passes sold widget — ensure visibility */}
+                        
                         <div className="mt-8 w-full flex justify-center">
-                          <PassesSold sold={97} total={100} />
+                          <PassesSold sold={107} total={130} />
                         </div>
 
                     </motion.div>
