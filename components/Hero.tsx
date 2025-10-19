@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import IntroAnimation from './IntroAnimation';
 import ParticleBackground from './ParticleBackground';
 import { motion } from 'framer-motion';
@@ -22,6 +22,9 @@ const Hero: React.FC<HeroProps> = ({ onIntroFinish, isIntroFinished }) => {
     const [error, setError] = useState<string | null>(null);
     const [showIntro, setShowIntro] = useState<boolean>(true);
     const [startAnimation, setStartAnimation] = useState(false);
+
+    // Fireworks canvas ref
+    const fireworksRef = useRef<HTMLCanvasElement>(null);
 
     useEffect(() => {
         const image = new Image();
@@ -81,6 +84,94 @@ const Hero: React.FC<HeroProps> = ({ onIntroFinish, isIntroFinished }) => {
         };
     }, []);
 
+    // Fireworks effect on mount
+    useEffect(() => {
+      const canvas = fireworksRef.current;
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+      let width = window.innerWidth;
+      let height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+      function resize() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
+      }
+      window.addEventListener('resize', resize);
+
+      // Particle system
+      type Particle = { x: number; y: number; vx: number; vy: number; life: number; color: string; size: number; };
+      let particles: Particle[] = [];
+      let burstTimeouts: number[] = [];
+
+      function burst() {
+        const cx = Math.random() * width * 0.8 + width * 0.1;
+        const cy = Math.random() * height * 0.4 + height * 0.1;
+        const colors = ['#FFD700', '#FF5E00', '#39FF14', '#FF1744', '#00BFFF'];
+        for (let i = 0; i < 40; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const speed = Math.random() * 4 + 2;
+          particles.push({
+            x: cx,
+            y: cy,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed,
+            life: 60 + Math.random() * 30,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            size: Math.random() * 2 + 1,
+          });
+        }
+      }
+
+      // Increase duration: schedule bursts for 10 seconds
+      const burstInterval = 350;
+      const burstDuration = 10000; // 10 seconds
+      let burstElapsed = 0;
+      function scheduleBursts() {
+        burst();
+        burstElapsed += burstInterval;
+        if (burstElapsed < burstDuration) {
+          burstTimeouts.push(window.setTimeout(scheduleBursts, burstInterval));
+        }
+      }
+      burstTimeouts.push(window.setTimeout(scheduleBursts, 200));
+
+      // Animate
+      let frame = 0;
+      const maxFrames = 600; // ~10 seconds at 60fps
+      function animate() {
+        ctx.clearRect(0, 0, width, height);
+        particles.forEach((p, idx) => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vx *= 0.96;
+          p.vy *= 0.96;
+          p.life -= 1;
+          ctx.globalAlpha = Math.max(0, p.life / 60);
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, 2 * Math.PI);
+          ctx.fillStyle = p.color;
+          ctx.shadowColor = p.color;
+          ctx.shadowBlur = 12;
+          ctx.fill();
+          ctx.shadowBlur = 0;
+          if (p.life <= 0) particles[idx] = null as any;
+        });
+        particles = particles.filter(Boolean);
+        frame++;
+        if (frame < maxFrames || particles.length > 0) requestAnimationFrame(animate);
+      }
+      animate();
+
+      return () => {
+        window.removeEventListener('resize', resize);
+        burstTimeouts.forEach(clearTimeout);
+      };
+    }, []);
+
     return (
         <>
             {showIntro && <IntroAnimation onComplete={handleIntroComplete} isLoading={isLoading} />}
@@ -95,7 +186,68 @@ const Hero: React.FC<HeroProps> = ({ onIntroFinish, isIntroFinished }) => {
                 </div>
             )}
 
-            <div className="h-screen relative flex flex-col items-center justify-center text-center text-white overflow-hidden">
+            {/* Fireworks Canvas Overlay */}
+            <canvas
+              ref={fireworksRef}
+              style={{
+                position: 'fixed',
+                inset: 0,
+                width: '100vw',
+                height: '100vh',
+                pointerEvents: 'none',
+                zIndex: 40,
+              }}
+            />
+
+          {/* Diya Row - Improved UI */}
+<div className="absolute left-0 right-0 top-0 z-50 flex justify-center gap-8 py-6 pointer-events-none">
+  {[...Array(7)].map((_, i) => (
+    <span key={i} className="animate-diya-flicker">
+      <svg viewBox="0 0 60 60" width="42" height="42">
+        <defs>
+          {/* Flame Gradient */}
+          <radialGradient id="flameGrad" cx="50%" cy="30%" r="60%">
+            <stop offset="0%" stopColor="#fff7c2"/>
+            <stop offset="40%" stopColor="#ffd95e"/>
+            <stop offset="100%" stopColor="#ff7b00"/>
+          </radialGradient>
+
+          {/* Base Gradient */}
+          <linearGradient id="baseGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#8d5524"/>
+            <stop offset="100%" stopColor="#5a3a17"/>
+          </linearGradient>
+        </defs>
+
+        {/* Glow behind flame */}
+        <circle cx="30" cy="20" r="10" fill="orange" opacity=".2" />
+
+        {/* Flame */}
+        <path d="M30 10 C28 16 33 18 30 24 C34 21 36 17 30 10 Z"
+              fill="url(#flameGrad)" opacity=".95" />
+
+        {/* Inner flame highlight */}
+        <path d="M30 13 C29 17 31 18 30 21"
+              stroke="#fffcd9" strokeWidth="1.5" strokeLinecap="round" opacity=".7"/>
+
+        {/* Diya base */}
+        <path d="M10 30 Q30 45 50 30 Q30 50 10 30 Z"
+              fill="url(#baseGrad)" />
+
+        {/* Oil sheen */}
+        <ellipse cx="30" cy="30" rx="14" ry="4"
+                 fill="rgba(255,255,255,.2)"/>
+      </svg>
+    </span>
+  ))}
+</div>
+
+            <div
+                className="h-screen relative flex flex-col items-center justify-center text-center text-white overflow-hidden"
+                style={{
+                  background: 'linear-gradient(135deg, #2d1e13 0%, #ffb347 60%, #ffcc80 100%)'
+                }}
+            >
                 <div
                     className="absolute top-0 left-0 w-full h-full bg-cover bg-center transition-opacity duration-1000"
                     style={imageUrl ? backgroundStyle : {}}

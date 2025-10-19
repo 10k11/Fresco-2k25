@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Hero from './components/Hero';
 import Countdown from './components/Countdown';
@@ -12,6 +11,7 @@ import Navbar from './components/Navbar';
 import CreatorPage from './components/CreatorPage';
 import Credits from './components/Credits';
 import TermsPage from './components/TermsPage';
+
 
 const App = () => {
   const [isAlertVisible, setIsAlertVisible] = useState(false);
@@ -34,7 +34,6 @@ const App = () => {
     }
   }, [page]);
 
-
   const handleCloseAlert = () => {
     setIsAlertVisible(false);
     setIsAlertClosed(true);
@@ -47,7 +46,6 @@ const App = () => {
   
   const handleIntroFinish = () => {
     setIsIntroFinished(true);
-    // Ensure the user is at the top of the page after the intro finishes.
     window.scrollTo({ top: 0, behavior: 'auto' });
   };
 

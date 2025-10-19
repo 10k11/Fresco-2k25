@@ -21,7 +21,11 @@ const Menu: React.FC = () => {
     };
 
     return (
-            <section id="menu" className="py-20 bg-black">
+            <section id="menu" className="py-20"
+                style={{
+                    background: 'linear-gradient(135deg, #2d1e13 0%, #ffb347 60%, #ffcc80 100%)'
+                }}
+            >
             <AnimatedDiv threshold={0.2} className="text-center mb-12">
                 <h2 className="text-4xl font-bold font-orbitron tracking-wide">Unlimited Buffet Lunch</h2>
                 <p className="text-xl text-gray-400 mt-2">A feast for your senses awaits.</p>
