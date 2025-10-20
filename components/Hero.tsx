@@ -365,7 +365,7 @@ const Hero: React.FC<HeroProps> = ({ onIntroFinish, isIntroFinished }) => {
                             transition={{ repeat: Infinity, duration: 2 }}
                             className="text-2xl md:text-3xl font-extrabold text-emerald-400 drop-shadow-[0_0_12px_#39FF14]"
                           >
-                            ₹1,199
+                            ₹1,250
                           </motion.span>
 
                           {/* Previous Price Below with Bigger Strikethrough */}
