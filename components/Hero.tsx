@@ -380,7 +380,7 @@ const Hero: React.FC<HeroProps> = ({ onIntroFinish, isIntroFinished }) => {
 
                         
                         <div className="mt-8 w-full flex justify-center">
-                          <PassesSold sold={128} total={150} />
+                          <PassesSold sold={131} total={150} />
                         </div>
 
                     </motion.div>
