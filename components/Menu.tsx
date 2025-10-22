@@ -23,7 +23,7 @@ const Menu: React.FC = () => {
     return (
             <section id="menu" className="py-20"
                 style={{
-                    background: 'linear-gradient(135deg, #2d1e13 0%, #ffb347 60%, #ffcc80 100%)'
+                    background: 'linear-gradient(135deg, #2d1e13 0%, #1f1e1dff 60%, #1d1c1bff 100%)'
                 }}
             >
             <AnimatedDiv threshold={0.2} className="text-center mb-12">
