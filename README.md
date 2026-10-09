@@ -1,5 +1,7 @@
 # Fresco 2k25 Invitation
 
+> **Live Demo:** https://fresco2k25.vercel.app/
+
 Single-page invitation and event site built with React + Vite. Includes animated hero/intro, venue details, live chat, photo gallery/upload, and an admin support panel backed by Supabase.
 
 ## Features
